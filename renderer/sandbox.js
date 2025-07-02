@@ -1,26 +1,30 @@
-// sandbox.js – Encrypt/decrypt converter lab
+const input = document.getElementById("sandboxInput");
+const output = document.getElementById("sandboxOutput");
+const mode = document.getElementById("sandboxMode");
 
-document.getElementById("sandboxInput").addEventListener("input", updateSandbox);
-document.getElementById("sandboxMode").addEventListener("change", updateSandbox);
+input.addEventListener("input", () => {
+  const val = input.value.trim();
+  const type = mode.value;
+  let result = "";
 
-function updateSandbox() {
-  const input = document.getElementById("sandboxInput").value.trim();
-  const mode = document.getElementById("sandboxMode").value;
-  let output = "";
-
-  if (!input) {
-    document.getElementById("sandboxOutput").textContent = "[ Awaiting input... ]";
+  if (!val) {
+    output.textContent = "[ Awaiting input... ]";
     return;
   }
 
-  switch (mode) {
-    case "ENC_DEC": output = wordToAscii(input, "[DEC]"); break;
-    case "ENC_HEX": output = wordToAscii(input, "[HX]"); break;
-    case "ENC_OCT": output = wordToAscii(input, "[OCT]"); break;
-    case "DEC":     output = asciiToWord(input, "[DEC]"); break;
-    case "HEX":     output = asciiToWord(input, "[HX]"); break;
-    case "OCT":     output = asciiToWord(input, "[OCT]"); break;
+  try {
+    if (type.startsWith("ENC")) {
+      const format = type.includes("HEX") ? "[HX]" : type.includes("OCT") ? "[OCT]" : "[DEC]";
+      result = wordToAscii(val, format);
+    } else {
+      const base = type === "HEX" ? 16 : type === "OCT" ? 8 : 10;
+      result = val
+        .split(/\s+/)
+        .map(code => String.fromCharCode(parseInt(code, base)))
+        .join("");
+    }
+    output.textContent = result;
+  } catch (e) {
+    output.textContent = `[ Error: ${e.message} ]`;
   }
-
-  document.getElementById("sandboxOutput").textContent = output;
-}
+});
