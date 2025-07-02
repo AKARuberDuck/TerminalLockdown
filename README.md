@@ -37,11 +37,11 @@ Open the site once in Chrome or Edge. A prompt will appear to “Install.” On 
 
 Use these commands in the terminal input to test special features:
 
-        | Command              | Effect                                         |
-        |----------------------|------------------------------------------------|
-        | `devMode://true`     | Unlocks all riddles instantly for dev testing |
-        | `banner://night`     | Forces night-mode ASCII splash                 |
-        | `sandbox://burst`    | Injects 3 procedural riddles at once           |
+ | Command              | Effect                                         |
+ |----------------------|------------------------------------------------|
+ | `devMode://true`     | Unlocks all riddles instantly for dev testing  |
+ | `banner://night`     | Forces night-mode ASCII splash                 |
+ | `sandbox://burst`    | Injects 3 procedural riddles at once           |
 
 ---
 
