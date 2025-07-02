@@ -1,36 +1,23 @@
-// riddles.js — Core riddle bank with metadata
+// Global riddles log
+const riddles = [];
 
-const riddles = [
-  {
-    riddle: "What has to be broken before you can use it?",
-    plain: "egg",
-    format: "[DEC]",
-    log: "Scrambled entity trace detected.",
-    quantum: false,
-    difficulty: "easy",
-    origin: "handwritten",
-    theme: "paradox"
-  },
-  {
-    riddle: "I'm tall when I'm young, and short when I'm old.",
-    plain: "candle",
-    format: "[HX]",
-    log: "Organic flame source confirmed.",
-    quantum: true,
-    alternateAnswers: [
-      { value: "wax", weight: 0.6 },
-      { value: "light", weight: 0.7, unlockAfterMs: 12000 }
-    ],
-    difficulty: "medium",
-    origin: "handwritten",
-    theme: "time"
-  }
-];
-
-function fillRiddleAnswers(list) {
-  list.forEach(r => {
-    r.answer = wordToAscii(r.plain, r.format);
-  });
+// Optional analytics
+function getRiddleStats() {
+  const stats = {
+    total: riddles.length,
+    procedural: riddles.filter(r => r.origin === "procedural").length,
+    neurolexicon: riddles.filter(r => r.origin === "neurolexicon").length,
+    formats: {
+      dec: riddles.filter(r => r.format === "[DEC]").length,
+      hex: riddles.filter(r => r.format === "[HX]").length,
+      oct: riddles.filter(r => r.format === "[OCT]").length
+    }
+  };
+  return stats;
 }
 
-fillRiddleAnswers(riddles);
+// Optional: dump to console (for dev use)
+function logRiddleStats() {
+  const stats = getRiddleStats();
+  console.log("📊 Riddle Stats:", stats);
+}
