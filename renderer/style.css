@@ -8,7 +8,7 @@
 body {
   margin: 0;
   padding: 16px;
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--fg);
   font-family: var(--font);
   overflow-x: hidden;
@@ -16,6 +16,7 @@ body {
 
 h2, h3, p, label {
   color: var(--fg);
+  font-family: var(--font);
 }
 
 input, select, button, textarea {
@@ -27,7 +28,10 @@ input, select, button, textarea {
   font-size: 15px;
 }
 
-input:focus, textarea:focus, select:focus, button:focus {
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
   outline: none;
   box-shadow: 0 0 4px var(--fg);
 }
@@ -76,7 +80,7 @@ button {
 }
 
 @keyframes flicker {
-  0% { opacity: 0.95; text-shadow: 0 0 1px var(--fg); }
+  0%   { opacity: 0.95; text-shadow: 0 0 1px var(--fg); }
   100% { opacity: 1; text-shadow: 0 0 3px var(--fg), 0 0 6px var(--fg); }
 }
 
@@ -99,9 +103,9 @@ button {
 }
 
 @keyframes toastFade {
-  0% { opacity: 0; transform: translateY(-20px); }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
+  0%   { opacity: 0; transform: translateY(-20px); }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
   100% { opacity: 0; transform: translateY(-40px); }
 }
 
@@ -145,6 +149,7 @@ label {
   margin-bottom: 4px;
 }
 
+/* Mobile Responsiveness */
 @media screen and (max-width: 768px) {
   #asciiSearchPanel,
   #sandboxPanel,
