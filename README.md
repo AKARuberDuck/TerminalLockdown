@@ -91,7 +91,7 @@ These experimental protocols can be activated via future dev toggles.
 Created by [AKARuberDuck](https://github.com/AKARuberDuck)  
 Thanks to MS Copilot for the - Code architecture and neural engine
 
-         **MIT License**
+         MIT License
 
 ---
 
