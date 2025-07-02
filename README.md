@@ -88,8 +88,8 @@ These experimental protocols can be activated via future dev toggles.
 
 ## 👤 CREDITS
 
-Created by [Commander AKARuberDuck](https://github.com/AKARuberDuck)  
-Thanks to MS Copilot for help with the - Code architecture and neural engine
+Created by [AKARuberDuck](https://github.com/AKARuberDuck)  
+Thanks to MS Copilot for the - Code architecture and neural engine
 
          **MIT License**
 
