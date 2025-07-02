@@ -1,176 +1,153 @@
+/* === Terminal Lockdown Global Style === */
+
 :root {
-  --bg: #000000;
-  --fg: #00ff00;
-  --border: #00ff00;
-  --font: 'Courier New', monospace;
+  --bg-color: #0b0f0c;
+  --primary: #00ff88;
+  --accent: #00d178;
+  --font-mono: 'Courier New', monospace;
+  --panel-bg: #111814;
+  --border: 1px solid #00aa55;
+  --transition: 0.2s ease-in-out;
 }
 
 body {
   margin: 0;
-  padding: 16px;
-  background-color: var(--bg);
-  color: var(--fg);
-  font-family: var(--font);
-  overflow-x: hidden;
-}
-
-h2, h3, p, label {
-  color: var(--fg);
-  font-family: var(--font);
-}
-
-input, select, button, textarea {
-  background: var(--bg);
-  color: var(--fg);
-  border: 1px solid var(--border);
-  font-family: var(--font);
-  padding: 4px;
-  font-size: 15px;
-}
-
-input:focus,
-textarea:focus,
-select:focus,
-button:focus {
-  outline: none;
-  box-shadow: 0 0 4px var(--fg);
-}
-
-#asciiInput {
-  border: none;
-  background: transparent;
-  caret-color: var(--fg);
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--primary);
+  font-family: var(--font-mono);
   font-size: 16px;
-  animation: blinkCaret 1s step-end infinite;
+  line-height: 1.5;
 }
 
-@keyframes blinkCaret {
-  0%, 100% { caret-color: transparent; }
-  50% { caret-color: var(--fg); }
+#terminal {
+  padding: 2rem;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
-pre, textarea {
-  background: var(--bg);
-  color: var(--fg);
-  border: 1px solid var(--border);
-  white-space: pre-wrap;
-  overflow-x: auto;
-  padding: 10px;
-  font-family: var(--font);
+input, button, select, textarea {
+  font-family: inherit;
+  font-size: 1em;
+  color: var(--primary);
+  background-color: transparent;
+  border: var(--border);
+  padding: 6px 10px;
+  margin-top: 6px;
+  transition: background-color var(--transition), color var(--transition);
 }
 
-button {
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: bold;
-  margin: 5px 2px;
-  padding: 4px 10px;
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  background-color: #001e10;
+}
+
+button:hover {
+  background-color: var(--accent);
+  color: #000;
   cursor: pointer;
-  border: 1px solid var(--fg);
-  background: transparent;
-  color: var(--fg);
 }
 
-#asciiBanner {
-  font-size: 12px;
-  text-shadow: 0 0 4px var(--fg);
+h1, h2, h3, h4 {
+  margin: 0 0 0.5em;
+  color: var(--primary);
+}
+
+pre.ascii-banner {
+  font-size: 1.2em;
   white-space: pre;
-  line-height: 1.3;
-  animation: flicker 2s infinite alternate;
+  line-height: 1.2;
+  color: #00ff44;
+  margin-bottom: 1rem;
 }
 
-@keyframes flicker {
-  0%   { opacity: 0.95; text-shadow: 0 0 1px var(--fg); }
-  100% { opacity: 1; text-shadow: 0 0 3px var(--fg), 0 0 6px var(--fg); }
+/* === Layout Panels === */
+
+#intro, #game, #asciiSearchPanel, #sandboxPanel,
+#codexPanel, #metricsPanel, #journalPanel {
+  background-color: var(--panel-bg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: var(--border);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.1);
 }
+
+#inputArea {
+  margin-top: 1em;
+}
+
+/* === Badge Toast === */
 
 .toast {
   position: fixed;
-  top: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--bg);
-  color: var(--fg);
-  border: 1px solid var(--border);
-  padding: 10px 20px;
-  font-weight: bold;
-  z-index: 1001;
-  animation: toastFade 3s ease-in-out forwards;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: #004d3d;
+  color: var(--primary);
+  padding: 10px 16px;
+  border: var(--border);
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity var(--transition);
+  z-index: 9999;
 }
 
-.hidden {
-  display: none;
+.toast:not(.hidden) {
+  opacity: 1;
 }
 
-@keyframes toastFade {
-  0%   { opacity: 0; transform: translateY(-20px); }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { opacity: 0; transform: translateY(-40px); }
-}
+/* === Footer and Navigation Buttons === */
 
 footer {
-  margin-top: 20px;
   text-align: center;
-  color: var(--fg);
-  font-size: 11px;
-  opacity: 0.6;
+  padding: 1rem;
+  font-size: 0.85em;
+  color: #00dd88;
+  opacity: 0.8;
+  border-top: var(--border);
+  margin-top: 2rem;
 }
 
-#asciiSearchPanel,
-#sandboxPanel,
-#codexPanel,
-#metricsPanel,
-#journalPanel {
-  position: fixed;
-  top: 60px;
-  right: 10px;
-  width: 320px;
-  max-height: 480px;
-  overflow-y: auto;
-  border: 1px solid var(--border);
-  padding: 10px;
-  background: var(--bg);
-  z-index: 1000;
+button {
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
-#journalTextarea {
+/* === Panel Toggles === */
+
+button[id$="Toggle"] {
+  background-color: #001a11;
+  border: var(--border);
+  font-size: 0.9em;
+}
+
+/* === Journal Enhancements === */
+
+textarea#journalTextarea {
   width: 100%;
-  height: 150px;
+  min-height: 150px;
+  background-color: #08100b;
+  border: var(--border);
+  color: var(--primary);
+  padding: 8px;
   resize: vertical;
+  font-family: var(--font-mono);
 }
 
-select {
-  margin: 4px 0;
-}
+/* === Responsive Adjustments === */
 
-label {
-  display: block;
-  margin-bottom: 4px;
-}
+@media (max-width: 768px) {
+  #terminal {
+    padding: 1rem;
+  }
 
-/* Mobile Responsiveness */
-@media screen and (max-width: 768px) {
-  #asciiSearchPanel,
-  #sandboxPanel,
-  #codexPanel,
-  #metricsPanel,
-  #journalPanel {
+  input, button {
     width: 100%;
-    left: 0;
-    right: 0;
-    top: 50px;
+    box-sizing: border-box;
   }
 
-  pre, textarea {
-    font-size: 14px;
-  }
-
-  #asciiInput {
-    font-size: 16px;
-  }
-
-  footer {
-    font-size: 10px;
+  .toast {
+    right: 0.5rem;
+    bottom: 0.5rem;
   }
 }
