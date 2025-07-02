@@ -1,17 +1,18 @@
-// metrics.js — Real-time status readout
+const metricsLog = document.getElementById("metricsLog");
 
-setInterval(() => {
-  if (typeof level === "undefined" || typeof agent === "undefined") return;
-
-  const percent = ((level / riddles.length) * 100).toFixed(1);
-  const mods = Object.entries(getModifiers()).filter(e => e[1]).map(e => e[0].toUpperCase()).join(", ") || "NONE";
-  const badgeList = getAllBadges().join(", ") || "NONE";
-
-  document.getElementById("metricsLog").textContent = `
-AGENT: ${agent}
-LEVEL: ${level}/${riddles.length} (${percent}%)
-MODIFIERS: ${mods}
-BADGES: ${badgeList}
-BACKSPACE USED: ${backspaceUsedThisLevel ? "YES" : "NO"}
+function updateMetrics() {
+  const stats = getRiddleStats();
+  metricsLog.textContent = `
+RIDDLES SOLVED: ${stats.total}
+ - Procedural: ${stats.procedural}
+ - Neurolexicon: ${stats.neurolexicon}
+FORMATS:
+ - DEC: ${stats.formats.dec}
+ - HEX: ${stats.formats.hex}
+ - OCT: ${stats.formats.oct}
 `.trim();
-}, 1500);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "M" && e.altKey) updateMetrics();
+});
