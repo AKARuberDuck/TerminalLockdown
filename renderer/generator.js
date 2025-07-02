@@ -1,5 +1,3 @@
-// generator.js – Template-Based Riddle Generator
-
 const nouns = ["key", "shadow", "echo", "signal", "mask", "code", "path", "flame", "cipher", "trace"];
 const verbs = ["run", "hide", "speak", "resonate", "fracture", "betray", "burn", "vanish", "glitch", "drift"];
 const templates = [
@@ -14,10 +12,6 @@ const templates = [
   "No [noun], no echo. Only the [verb]."
 ];
 
-function getRandom(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
 function injectProceduralRiddle() {
   const base = getRandom(templates);
   const withNouns = base.replace(/
@@ -25,11 +19,13 @@ function injectProceduralRiddle() {
 \[noun\]
 
 /g, () => getRandom(nouns));
-const withVerbs = withNouns.replace(/
+  const withVerbs = withNouns.replace(/
 
 \[verb\]
 
 /g, () => getRandom(verbs));
+
+  const answer = getRandom(nouns);
   const format = getRandom(["[DEC]", "[HX]", "[OCT]"]);
   const encoded = wordToAscii(answer, format);
 
