@@ -8,44 +8,56 @@
 
 ## 🔐 FEATURES
 
-- 🧠 **AI & Procedural Riddles** — Handcrafted, generative, and Neurolexicon-synthesized puzzles
-- 🧬 **Quantum Logic** — Alternate accepted answers with timing thresholds
-- 🛠️ **Sandbox Tool** — Live ASCII↔HEX↔OCT↔Text conversions
-- 🧾 **Encrypted Journal** — Optional local encryption of agent thoughts
-- 🏅 **Badge System** — Track achievements and unlock behavioral medals
-- 🧠 **Memory System** — Riddles and Codex evolve based on past interactions
-- 📚 **Codex & Agent Profile** — Live logs of your journey, lore, and intel
-- 💾 **Full Offline Support** — 100% PWA compliant, cacheable, installable, and local-first
+- 🧠 AI & Procedural Riddles — Handcrafted, generated, and memory-sensitive challenges
+- 🧬 Quantum Logic — Accepts alternate solutions based on timing, logic patterns, and metadata
+- 🛠️ Sandbox Tool — Real-time ASCII ↔ HEX ↔ OCT ↔ Text conversion lab
+- 📓 Encrypted Journal — Log encrypted agent intel (local-only)
+- 🏅 Badge System — Unlock rewards based on performance and behavior
+- 📚 Codex & Profile — Stores lore, mission logs, and riddle lineage
+- 💾 Fully Offline — PWA-enabled, installable, and cache-resilient
 
 ---
 
-## 🧰 INSTALLATION & SETUP
+## 🧰 INSTALLATION
 
-### ▶ Run Locally
+### ▶ Local Play
 
-1. **Clone this repo** or [download ZIP](https://github.com/AKARuberDuck/TerminalLockdown)
-2. Open `index.html` in a modern browser (Chrome, Firefox, Edge)
-3. You're in. No internet connection needed.
+1. **Clone or download**  
+   [https://github.com/AKARuberDuck/TerminalLockdown](https://github.com/AKARuberDuck/TerminalLockdown)
 
-### 📲 Install as App (PWA)
+2. Open `index.html` in any modern browser  
+   (Chrome, Firefox, Edge)
 
-Open the site once in Chrome or Edge. A prompt will appear to “Install.” On desktop, you get a standalone app window. On mobile, it behaves like a native app.
+3. You're in. Internet not required.
+
+### 🌐 Deploy with GitHub Pages
+
+1. Navigate to **Repo → Settings → Pages**
+2. Set Source: `main` branch, `/ (root)` folder
+3. GitHub will deploy to:  
+   `https://akaruberduck.github.io/TerminalLockdown/`
+
+### 📲 Install as App
+
+Terminal Lockdown is a PWA. After opening the site once, your browser may prompt you to **Install App** — this creates a native-like desktop or mobile experience, completely local.
 
 ---
 
-## 🧪 DEV TOOLS (OPTIONAL)
+## 🧪 DEV TOOLS
 
-Use these commands in the terminal input to test special features:
+Input these in the terminal field to activate internal flags:
 
- | Command              | Effect                                         |
- |----------------------|------------------------------------------------|
- | `devMode://true`     | Unlocks all riddles instantly for dev testing  |
- | `banner://night`     | Forces night-mode ASCII splash                 |
- | `sandbox://burst`    | Injects 3 procedural riddles at once           |
+| Command              | Effect                                         |
+|----------------------|------------------------------------------------|
+| `devMode://true`     | Unlocks all riddles instantly for testing     |
+| `sandbox://burst`    | Injects 3 procedural riddles immediately      |
+| `banner://night`     | Forces CRT terminal to night-mode splash      |
 
 ---
 
-## 📂 PROJECT STRUCTURE
+## 📁 FILE STRUCTURE
+
+
 
     TerminalLockdown/ 
     ├── index.html 
@@ -74,31 +86,37 @@ Use these commands in the terminal input to test special features:
     │ ├── sandbox.js 
     │ └── uiEnhancements.js
 
----
-
-## 🧠 KNOWN MODES
-
-- `SURGE` — Time attack mode (in progress)
-- `WRAITH` — No visible input field (coming soon)
-- `ECLIPSE` — Codex interwoven with riddles (prototype)
-
-These experimental protocols can be activated via future dev toggles.
 
 ---
 
-## 👤 CREDITS
+## 🧠 FUTURE MODES & IDEAS
 
-Created by [AKARuberDuck](https://github.com/AKARuberDuck)  
-Thanks to MS Copilot for the - Code architecture and neural engine
+- `SURGE` — Timer-based speed riddles
+- `WRAITH` — Invisible input mode
+- `ECLIPSE` — Memory crossover with journal/codex fusion
+- `RESONATOR` — AI-generated riddles based on Codex lore
 
-         MIT License
-
----
-
-## 🛡️ PRIVACY NOTICE
-
-Terminal Lockdown is designed for **local-first and offline operation**. All save data resides on your device via localStorage. No cloud storage, tracking, or external APIs are used.
+These expansion systems are modular and queued for development in future updates.
 
 ---
 
-        > You don’t play Terminal Lockdown — it plays back.
+## 🛡️ PRIVACY
+
+Terminal Lockdown was built to be **100% local-first.**
+
+- No remote APIs
+- No telemetry or analytics
+- All state is saved via `localStorage` on your device
+- Play it offline, forever
+
+---
+
+## 🧠 CREDITS
+
+Created by **[AKARuberDuck](https://github.com/AKARuberDuck)**  
+Curated with the assistance of Microsoft Copilot  
+All logic, content, and visual structure designed for immersive cognitive engagement.
+
+> _"The code cracked you, not the other way around."_
+
+MIT License
