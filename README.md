@@ -37,11 +37,11 @@ Open the site once in Chrome or Edge. A prompt will appear to “Install.” On 
 
 Use these commands in the terminal input to test special features:
 
-| Command              | Effect                                         |
-|----------------------|------------------------------------------------|
-| `devMode://true`     | Unlocks all riddles instantly for dev testing |
-| `banner://night`     | Forces night-mode ASCII splash                 |
-| `sandbox://burst`    | Injects 3 procedural riddles at once           |
+        | Command              | Effect                                         |
+        |----------------------|------------------------------------------------|
+        | `devMode://true`     | Unlocks all riddles instantly for dev testing |
+        | `banner://night`     | Forces night-mode ASCII splash                 |
+        | `sandbox://burst`    | Injects 3 procedural riddles at once           |
 
 ---
 
@@ -73,3 +73,32 @@ Use these commands in the terminal input to test special features:
     │ ├── journal.js 
     │ ├── sandbox.js 
     │ └── uiEnhancements.js
+
+---
+
+## 🧠 KNOWN MODES
+
+- `SURGE` — Time attack mode (in progress)
+- `WRAITH` — No visible input field (coming soon)
+- `ECLIPSE` — Codex interwoven with riddles (prototype)
+
+These experimental protocols can be activated via future dev toggles.
+
+---
+
+## 👤 CREDITS
+
+Created by [Commander AKARuberDuck](https://github.com/AKARuberDuck)  
+Thanks to MS Copilot for help with the - Code architecture and neural engine
+
+         **MIT License**
+
+---
+
+## 🛡️ PRIVACY NOTICE
+
+Terminal Lockdown is designed for **local-first and offline operation**. All save data resides on your device via localStorage. No cloud storage, tracking, or external APIs are used.
+
+---
+
+        > You don’t play Terminal Lockdown — it plays back.
