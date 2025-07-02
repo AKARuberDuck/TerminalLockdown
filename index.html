@@ -1,1 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Terminal Lockdown</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#00ff00" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="stylesheet" href="renderer/style.css" />
+</head>
+<body>
+  <div id="terminal">
+    <pre id="asciiBanner" class="ascii-banner">Initializing...</pre>
 
+    <div id="intro">
+      <h2>TERMINAL LOCKDOWN</h2>
+      <p>Enter agent codename:</p>
+      <input id="usernameInput" placeholder="e.g. NIGHTFOX" />
+      <div id="modifiers">
+        <label><input type="checkbox" id="lockBackspace" /> 🚫 BACKSPACE</label>
+        <label><input type="checkbox" id="hideFormat" /> ❓ FORMAT HIDDEN</label>
+        <label><input type="checkbox" id="timerLimit" /> ⏱️ TIMER</label>
+      </div>
+      <button id="startBtn">ENTER</button>
+    </div>
+
+    <div id="game" style="display:none;">
+      <div id="levelLabel"></div>
+      <div id="envLabel"></div>
+      <p id="story"></p>
+      <p id="riddle"></p>
+      <p id="format"></p>
+      <div id="inputArea">
+        <input id="asciiInput" placeholder="Enter cipher..." autofocus />
+        <div id="badgeToast" class="toast hidden"></div>
+      </div>
+      <div id="status"></div>
+    </div>
+
+    <div id="agentProfile" style="display:none;">
+      <h3>📋 AGENT STATUS LOG</h3>
+      <pre id="profileData">Initializing...</pre>
+      <button onclick="exportProgress()">📥 Export Progress</button>
+    </div>
+
+    <div id="asciiSearchPanel" style="display:none;">
+      <h3>🔍 ASCII SEARCH</h3>
+      <input id="asciiSearchInput" placeholder="e.g. A or 65" />
+      <div id="asciiResults"></div>
+    </div>
+
+    <div id="sandboxPanel" style="display:none;">
+      <h3>🧪 SANDBOX</h3>
+      <input id="sandboxInput" placeholder="input..." />
+      <select id="sandboxMode">
+        <option value="ENC_DEC">ENC [DEC]</option>
+        <option value="ENC_HEX">ENC [HEX]</option>
+        <option value="ENC_OCT">ENC [OCT]</option>
+        <option value="DEC">DEC → TXT</option>
+        <option value="HEX">HEX → TXT</option>
+        <option value="OCT">OCT → TXT</option>
+      </select>
+      <pre id="sandboxOutput">[ Awaiting input... ]</pre>
+    </div>
+
+    <div id="codexPanel" style="display:none;">
+      <h3>📚 CODEX INTEL</h3>
+      <input id="codexSearch" placeholder="Search riddles..." />
+      <select id="codexFilterTheme"></select>
+      <select id="codexFilterDifficulty"></select>
+      <select id="codexFilterOrigin"></select>
+      <pre id="codexContent">Awaiting unlock...</pre>
+    </div>
+
+    <div id="metricsPanel" style="display:none;">
+      <h3>📊 AGENT METRICS</h3>
+      <pre id="metricsLog">Compiling...</pre>
+    </div>
+
+    <div id="journalPanel" style="display:none;">
+      <h3>📓 AGENT JOURNAL</h3>
+      <textarea id="journalTextarea" placeholder="Write encrypted thoughts here..."></textarea>
+      <label><input type="checkbox" id="encryptJournal" /> Encrypt Entry (DEC)</label><br />
+      <button onclick="saveJournal()">💾 Save Entry</button>
+    </div>
+  </div>
+
+  <!-- Nav Buttons -->
+  <button id="asciiSearchToggle">🔍 ASCII</button>
+  <button id="sandboxToggle">🧪 TOOLS</button>
+  <button id="codexToggle">📚 CODEX</button>
+  <button id="metricsToggle">📊 METRICS</button>
+  <button id="journalToggle">📓 JOURNAL</button>
+
+  <footer id="footer">
+    TERMINAL LOCKDOWN v1.2.0 — Created by Commander AKARuberDuck — MIT License
+  </footer>
+
+  <!-- Core Scripts -->
+  <script src="renderer/utils.js"></script>
+  <script src="renderer/profiles.js"></script>
+  <script src="renderer/riddles.js"></script>
+  <script src="renderer/modifiers.js"></script>
+  <script src="renderer/badges.js"></script>
+  <script src="renderer/quantum.js"></script>
+  <script src="renderer/fontRenderer.js"></script>
+  <script src="renderer/banner.js"></script>
+  <script src="renderer/sandbox.js"></script>
+  <script src="renderer/metrics.js"></script>
+  <script src="renderer/codex.js"></script>
+  <script src="renderer/generator.js"></script>
+  <script src="renderer/journal.js"></script>
+  <script src="renderer/mutator.js"></script>
+  <script src="renderer/glitch.js"></script>
+  <script src="renderer/riddleAI.js"></script>
+  <script src="renderer/uiEnhancements.js"></script>
+  <script src="renderer/app.js"></script>
+
+  <!-- Offline Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>
