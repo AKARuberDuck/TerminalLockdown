@@ -1,4 +1,4 @@
-// riddleAI.js — Time-sensitive, memory-referential riddle synthesis
+// riddleAI.js – Time-Aware Riddle Generator with Memory Echo (Corrected)
 
 const riddleMemory = {
   lastNouns: [],
