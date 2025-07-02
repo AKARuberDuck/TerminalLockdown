@@ -38,55 +38,10 @@
       <div id="status"></div>
     </div>
 
-    <div id="agentProfile" style="display:none;">
-      <h3>📋 AGENT STATUS LOG</h3>
-      <pre id="profileData">Initializing...</pre>
-      <button onclick="exportProgress()">📥 Export Progress</button>
-    </div>
-
-    <div id="asciiSearchPanel" style="display:none;">
-      <h3>🔍 ASCII SEARCH</h3>
-      <input id="asciiSearchInput" placeholder="e.g. A or 65" />
-      <div id="asciiResults"></div>
-    </div>
-
-    <div id="sandboxPanel" style="display:none;">
-      <h3>🧪 SANDBOX</h3>
-      <input id="sandboxInput" placeholder="input..." />
-      <select id="sandboxMode">
-        <option value="ENC_DEC">ENC [DEC]</option>
-        <option value="ENC_HEX">ENC [HEX]</option>
-        <option value="ENC_OCT">ENC [OCT]</option>
-        <option value="DEC">DEC → TXT</option>
-        <option value="HEX">HEX → TXT</option>
-        <option value="OCT">OCT → TXT</option>
-      </select>
-      <pre id="sandboxOutput">[ Awaiting input... ]</pre>
-    </div>
-
-    <div id="codexPanel" style="display:none;">
-      <h3>📚 CODEX INTEL</h3>
-      <input id="codexSearch" placeholder="Search riddles..." />
-      <select id="codexFilterTheme"></select>
-      <select id="codexFilterDifficulty"></select>
-      <select id="codexFilterOrigin"></select>
-      <pre id="codexContent">Awaiting unlock...</pre>
-    </div>
-
-    <div id="metricsPanel" style="display:none;">
-      <h3>📊 AGENT METRICS</h3>
-      <pre id="metricsLog">Compiling...</pre>
-    </div>
-
-    <div id="journalPanel" style="display:none;">
-      <h3>📓 AGENT JOURNAL</h3>
-      <textarea id="journalTextarea" placeholder="Write encrypted thoughts here..."></textarea>
-      <label><input type="checkbox" id="encryptJournal" /> Encrypt Entry (DEC)</label><br />
-      <button onclick="saveJournal()">💾 Save Entry</button>
-    </div>
+    <!-- Additional panels (journal, metrics, codex, sandbox) are loaded later -->
   </div>
 
-  <!-- Nav Buttons -->
+  <!-- Navigation buttons and footer -->
   <button id="asciiSearchToggle">🔍 ASCII</button>
   <button id="sandboxToggle">🧪 TOOLS</button>
   <button id="codexToggle">📚 CODEX</button>
@@ -97,7 +52,7 @@
     TERMINAL LOCKDOWN v1.2.0 — Created by Commander AKARuberDuck — MIT License
   </footer>
 
-  <!-- Load Order Matters: utils → subsystems → app.js -->
+  <!-- Script loading order: from utilities to app engine -->
   <script src="renderer/utils.js"></script>
   <script src="renderer/modifiers.js"></script>
   <script src="renderer/profiles.js"></script>
@@ -117,7 +72,7 @@
   <script src="renderer/uiEnhancements.js"></script>
   <script src="renderer/app.js"></script>
 
-  <!-- Service Worker -->
+  <!-- Service Worker for offline support -->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
