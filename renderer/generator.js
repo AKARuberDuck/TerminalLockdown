@@ -25,13 +25,11 @@ function injectProceduralRiddle() {
 \[noun\]
 
 /g, () => getRandom(nouns));
-  const withVerbs = withNouns.replace(/
+const withVerbs = withNouns.replace(/
 
 \[verb\]
 
 /g, () => getRandom(verbs));
-
-  const answer = getRandom(nouns);
   const format = getRandom(["[DEC]", "[HX]", "[OCT]"]);
   const encoded = wordToAscii(answer, format);
 
