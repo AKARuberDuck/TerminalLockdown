@@ -97,27 +97,27 @@
     TERMINAL LOCKDOWN v1.2.0 — Created by Commander AKARuberDuck — MIT License
   </footer>
 
-  <!-- Core Scripts -->
+  <!-- Load Order Matters: utils → subsystems → app.js -->
   <script src="renderer/utils.js"></script>
+  <script src="renderer/modifiers.js"></script>
   <script src="renderer/profiles.js"></script>
   <script src="renderer/riddles.js"></script>
-  <script src="renderer/modifiers.js"></script>
-  <script src="renderer/badges.js"></script>
+  <script src="renderer/generator.js"></script>
+  <script src="renderer/riddleAI.js"></script>
   <script src="renderer/quantum.js"></script>
   <script src="renderer/fontRenderer.js"></script>
   <script src="renderer/banner.js"></script>
+  <script src="renderer/badges.js"></script>
   <script src="renderer/sandbox.js"></script>
   <script src="renderer/metrics.js"></script>
   <script src="renderer/codex.js"></script>
-  <script src="renderer/generator.js"></script>
   <script src="renderer/journal.js"></script>
-  <script src="renderer/mutator.js"></script>
   <script src="renderer/glitch.js"></script>
-  <script src="renderer/riddleAI.js"></script>
+  <script src="renderer/mutator.js"></script>
   <script src="renderer/uiEnhancements.js"></script>
   <script src="renderer/app.js"></script>
 
-  <!-- Offline Worker -->
+  <!-- Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
