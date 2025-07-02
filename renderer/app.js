@@ -1,126 +1,48 @@
-// app.js — Mission Engine & Input Dispatch
+document.addEventListener("DOMContentLoaded", () => {
+  const usernameInput = document.getElementById("usernameInput");
+  const startBtn = document.getElementById("startBtn");
+  const asciiInput = document.getElementById("asciiInput");
+  const riddleElem = document.getElementById("riddle");
+  const formatElem = document.getElementById("format");
+  const storyElem = document.getElementById("story");
+  const levelLabel = document.getElementById("levelLabel");
 
-let agent = "";
-let level = 0;
-let currentRiddle;
-let hardModes = {};
-let timer;
-let inputHistory = [];
-let inputIndex = -1;
+  let currentRiddle = null;
+  let level = 0;
 
-document.getElementById("startBtn").onclick = () => {
-  agent = document.getElementById("usernameInput").value.trim().toUpperCase();
-  if (!agent) return;
+  function nextRiddle() {
+    const useAI = Math.random() > 0.5;
+    useAI ? injectNeuroRiddle() : injectProceduralRiddle();
+    currentRiddle = riddles[riddles.length - 1];
 
-  level = loadProgress(agent);
-  hardModes = getModifiers();
-
-  document.getElementById("intro").style.display = "none";
-  document.getElementById("game").style.display = "block";
-  renderFont("AGENT " + agent, "mini");
-  nextLevel();
-};
-
-document.getElementById("asciiInput").addEventListener("keydown", e => {
-  if (hardModes.lockBackspace && e.key === "Backspace") {
-    e.preventDefault();
-    markBackspaceUsed();
-    return;
+    riddleElem.textContent = currentRiddle.riddle;
+    formatElem.textContent = `FORMAT: ${currentRiddle.format}`;
+    levelLabel.textContent = `LEVEL ${level + 1}`;
+    storyElem.textContent = currentRiddle.log || "Decrypt the terminal lock.";
+    asciiInput.value = "";
+    asciiInput.focus();
   }
 
-  if (e.key === "Enter") {
-    const input = e.target.value.trim();
-    if (input) {
-      inputHistory.unshift(input);
-      inputIndex = -1;
-      checkAnswer(input);
+  startBtn.addEventListener("click", () => {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("game").style.display = "block";
+    level = 0;
+    nextRiddle();
+  });
+
+  asciiInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      if (!currentRiddle) return;
+      const input = asciiInput.value.trim();
+      const correct = input === currentRiddle.answer;
+      document.getElementById("status").textContent = correct
+        ? "✔️ ACCESS GRANTED"
+        : "❌ ACCESS DENIED";
+
+      if (correct) {
+        level++;
+        setTimeout(nextRiddle, 800);
+      }
     }
-  }
-
-  if (e.key === "ArrowUp") {
-    e.preventDefault();
-    if (inputHistory.length && inputIndex < inputHistory.length - 1) {
-      inputIndex++;
-      e.target.value = inputHistory[inputIndex];
-    }
-  }
-
-  if (e.key === "ArrowDown") {
-    e.preventDefault();
-    if (inputIndex > 0) {
-      inputIndex--;
-      e.target.value = inputHistory[inputIndex];
-    } else {
-      inputIndex = -1;
-      e.target.value = "";
-    }
-  }
-});
-
-function nextLevel() {
-  if (glitchPending()) return triggerGlitchScreen();
-
-  if (level >= riddles.length) {
-    level % 5 === 0 ? injectNeuroRiddle() : injectProceduralRiddle();
-  }
-
-  currentRiddle = riddles[level];
-  currentRiddle._startTime = Date.now();
-
-  initializeQuantumClock(currentRiddle);
-  resetBackspaceFlag();
-  maybeInjectMutation(currentRiddle, level);
-
-  document.getElementById("asciiInput").value = "";
-  document.getElementById("levelLabel").textContent = `LEVEL ${level + 1}`;
-  document.getElementById("riddle").textContent = currentRiddle.riddle || "[REDACTED]";
-  document.getElementById("format").textContent = hardModes.hideFormat ? "[ ??? ]" : currentRiddle.format;
-  document.getElementById("envLabel").textContent = currentRiddle.log || "";
-  document.getElementById("status").textContent = "";
-}
-
-function checkAnswer(input) {
-  if (input.startsWith("banner://")) {
-    window.location.hash = input;
-    location.reload();
-    return;
-  }
-
-  if (input.startsWith("sandbox://")) {
-    triggerSandboxEffect(input);
-    return;
-  }
-
-  if (input === "devMode://true") {
-    level = riddles.length;
-    renderAgentProfile(agent, level, riddles);
-    nextLevel();
-    return;
-  }
-
-  const isPrimary = isCorrectAnswer(currentRiddle, input);
-  const quantumResult = handleQuantumResponse(isPrimary, currentRiddle);
-
-  if (quantumResult.outcome === "primary") {
-    level++;
-    saveProgress(agent, level);
-    evaluateLevelPerformance(currentRiddle, input);
-    renderAgentProfile(agent, level, riddles);
-    renderBadges();
-    nextLevel();
-  } else if (quantumResult.outcome === "alternate") {
-    awardBadge("🔍 PATTERN BREAKER");
-    document.getElementById("status").textContent = `✅ ALT PATH ACCEPTED (w: ${quantumResult.weight})`;
-  } else {
-    incrementWrongCount();
-    document.getElementById("status").textContent = "❌ Incorrect input";
-  }
-}
-
-["asciiSearchToggle", "sandboxToggle", "codexToggle", "metricsToggle", "journalToggle"].forEach(id => {
-  const btn = document.getElementById(id);
-  const panel = document.getElementById(btn.id.replace("Toggle", "Panel"));
-  btn.onclick = () => {
-    panel.style.display = panel.style.display === "none" ? "block" : "none";
-  };
+  });
 });
