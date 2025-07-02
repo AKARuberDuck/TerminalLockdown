@@ -1,4 +1,4 @@
-// generator.js – Template-based riddle synthesis
+// generator.js – Template-Based Riddle Generator (Corrected RegEx)
 
 const nouns = ["key", "shadow", "echo", "signal", "mask", "code", "path", "flame", "cipher", "trace"];
 const verbs = ["run", "hide", "speak", "resonate", "fracture", "betray", "burn", "vanish", "glitch", "drift"];
