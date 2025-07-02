@@ -1,5 +1,3 @@
-// riddleAI.js – Neurolexicon Riddle Generator with Echo and Phase Logic
-
 const riddleMemory = {
   lastNouns: [],
   lastVerbs: [],
