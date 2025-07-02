@@ -20,11 +20,12 @@ function getRandom(arr) {
 
 function injectProceduralRiddle() {
   const base = getRandom(templates);
-  const withNouns = base.replace(/
+const withNouns = base.replace(/
 
 \[noun\]
 
 /g, () => getRandom(nouns));
+
   const withVerbs = withNouns.replace(/
 
 \[verb\]
