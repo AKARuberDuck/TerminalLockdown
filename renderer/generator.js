@@ -26,7 +26,7 @@ const withNouns = base.replace(/
 
 /g, () => getRandom(nouns));
 
-  const withVerbs = withNouns.replace(/
+const withVerbs = withNouns.replace(/
 
 \[verb\]
 
