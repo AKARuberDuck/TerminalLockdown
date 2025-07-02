@@ -1,4 +1,4 @@
-// riddleAI.js – Time-Aware Riddle Generator with Memory Echo (Corrected)
+// riddleAI.js – Phase-Based, Echo-Memory Riddle Synthesizer
 
 const riddleMemory = {
   lastNouns: [],
@@ -52,7 +52,7 @@ function injectNeuroRiddle() {
   const verb1 = echoFromMemory(riddleMemory.lastVerbs, verbs);
   const verb2 = echoFromMemory(riddleMemory.lastVerbs, verbs);
 
-  let output = template
+  const output = template
     .replace(/
 
 \[noun\]
