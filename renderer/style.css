@@ -1,0 +1,171 @@
+:root {
+  --bg: #000000;
+  --fg: #00ff00;
+  --border: #00ff00;
+  --font: 'Courier New', monospace;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  overflow-x: hidden;
+}
+
+h2, h3, p, label {
+  color: var(--fg);
+}
+
+input, select, button, textarea {
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  font-family: var(--font);
+  padding: 4px;
+  font-size: 15px;
+}
+
+input:focus, textarea:focus, select:focus, button:focus {
+  outline: none;
+  box-shadow: 0 0 4px var(--fg);
+}
+
+#asciiInput {
+  border: none;
+  background: transparent;
+  caret-color: var(--fg);
+  font-size: 16px;
+  animation: blinkCaret 1s step-end infinite;
+}
+
+@keyframes blinkCaret {
+  0%, 100% { caret-color: transparent; }
+  50% { caret-color: var(--fg); }
+}
+
+pre, textarea {
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  white-space: pre-wrap;
+  overflow-x: auto;
+  padding: 10px;
+  font-family: var(--font);
+}
+
+button {
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: bold;
+  margin: 5px 2px;
+  padding: 4px 10px;
+  cursor: pointer;
+  border: 1px solid var(--fg);
+  background: transparent;
+  color: var(--fg);
+}
+
+#asciiBanner {
+  font-size: 12px;
+  text-shadow: 0 0 4px var(--fg);
+  white-space: pre;
+  line-height: 1.3;
+  animation: flicker 2s infinite alternate;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.95; text-shadow: 0 0 1px var(--fg); }
+  100% { opacity: 1; text-shadow: 0 0 3px var(--fg), 0 0 6px var(--fg); }
+}
+
+.toast {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+  font-weight: bold;
+  z-index: 1001;
+  animation: toastFade 3s ease-in-out forwards;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes toastFade {
+  0% { opacity: 0; transform: translateY(-20px); }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-40px); }
+}
+
+footer {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--fg);
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+#asciiSearchPanel,
+#sandboxPanel,
+#codexPanel,
+#metricsPanel,
+#journalPanel {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  width: 320px;
+  max-height: 480px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  padding: 10px;
+  background: var(--bg);
+  z-index: 1000;
+}
+
+#journalTextarea {
+  width: 100%;
+  height: 150px;
+  resize: vertical;
+}
+
+select {
+  margin: 4px 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+@media screen and (max-width: 768px) {
+  #asciiSearchPanel,
+  #sandboxPanel,
+  #codexPanel,
+  #metricsPanel,
+  #journalPanel {
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 50px;
+  }
+
+  pre, textarea {
+    font-size: 14px;
+  }
+
+  #asciiInput {
+    font-size: 16px;
+  }
+
+  footer {
+    font-size: 10px;
+  }
+}
