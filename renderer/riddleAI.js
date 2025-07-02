@@ -1,4 +1,4 @@
-// riddleAI.js – Phase-Based, Echo-Memory Riddle Synthesizer
+// riddleAI.js – Neurolexicon Riddle Generator with Echo and Phase Logic
 
 const riddleMemory = {
   lastNouns: [],
