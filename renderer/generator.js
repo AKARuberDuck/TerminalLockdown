@@ -1,15 +1,9 @@
-const nouns = ["key", "shadow", "echo", "signal", "mask", "code", "path", "flame", "cipher", "trace"];
-const verbs = ["run", "hide", "speak", "resonate", "fracture", "betray", "burn", "vanish", "glitch", "drift"];
+const nouns = ["key", "echo", "signal", "cipher", "trace"];
+const verbs = ["run", "hide", "glitch", "decode", "fracture"];
 const templates = [
-  "What is the [noun] that [verb]s but cannot [verb]?",
-  "You [verb] it once, but it [verb]s forever.",
-  "The [noun] that doesn't [verb] waits for no [noun].",
-  "Every [noun] must [verb] before it breaks.",
-  "Only when the [noun] [verb]s do the shadows reveal themselves.",
-  "Decrypt the [noun], and it will [verb] the truth.",
-  "A [noun] that [verb]s leaves no [noun] behind.",
-  "[noun]. [verb]. [noun]. Again and again.",
-  "No [noun], no echo. Only the [verb]."
+  "The [noun] that [verb]s must be traced.",
+  "When you [verb], the [noun] reveals itself.",
+  "Every [noun] wants to [verb] again."
 ];
 
 function injectProceduralRiddle() {
@@ -24,7 +18,6 @@ function injectProceduralRiddle() {
 \[verb\]
 
 /g, () => getRandom(verbs));
-
   const answer = getRandom(nouns);
   const format = getRandom(["[DEC]", "[HX]", "[OCT]"]);
   const encoded = wordToAscii(answer, format);
@@ -34,8 +27,6 @@ function injectProceduralRiddle() {
     plain: answer,
     format,
     answer: encoded,
-    quantum: false,
-    difficulty: "medium",
     origin: "procedural",
     theme: "glitch"
   });
