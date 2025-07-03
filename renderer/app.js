@@ -1,26 +1,39 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const usernameInput = document.getElementById("usernameInput");
   const startBtn = document.getElementById("startBtn");
   const asciiInput = document.getElementById("asciiInput");
-  const riddleElem = document.getElementById("riddle");
-  const formatElem = document.getElementById("format");
-  const storyElem = document.getElementById("story");
-  const levelLabel = document.getElementById("levelLabel");
+  const lockBackspace = document.getElementById("lockBackspace");
+  const timerDisplay = document.getElementById("timerDisplay");
 
-  let currentRiddle = null;
   let level = 0;
+  let currentRiddle = null;
+  let countdownInterval;
+
+  function startTimer() {
+    let time = 30;
+    timerDisplay.textContent = `⏳ TIME: ${time}`;
+    countdownInterval = setInterval(() => {
+      time--;
+      timerDisplay.textContent = `⏳ TIME: ${time}`;
+      if (time <= 0) {
+        clearInterval(countdownInterval);
+        showBadge("❌ TIME'S UP");
+        asciiInput.disabled = true;
+      }
+    }, 1000);
+  }
 
   function nextRiddle() {
     const useAI = Math.random() > 0.5;
-    useAI ? injectNeuroRiddle() : injectProceduralRiddle();
+    (useAI ? injectNeuroRiddle : injectProceduralRiddle)();
     currentRiddle = riddles[riddles.length - 1];
 
-    riddleElem.textContent = currentRiddle.riddle;
-    formatElem.textContent = `FORMAT: ${currentRiddle.format}`;
-    levelLabel.textContent = `LEVEL ${level + 1}`;
-    storyElem.textContent = currentRiddle.log || "Decrypt the terminal lock.";
+    document.getElementById("riddle").textContent = currentRiddle.riddle;
+    document.getElementById("format").textContent = document.getElementById("hideFormat").checked ? "FORMAT: [???]" : `FORMAT: ${currentRiddle.format}`;
+    document.getElementById("story").textContent = currentRiddle.theme;
     asciiInput.value = "";
+    asciiInput.disabled = false;
     asciiInput.focus();
+    if (document.getElementById("timerLimit").checked) startTimer();
   }
 
   startBtn.addEventListener("click", () => {
@@ -31,17 +44,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   asciiInput.addEventListener("keydown", (e) => {
+    if (lockBackspace.checked && e.key === "Backspace") {
+      e.preventDefault();
+      showBadge("🚫 BACKSPACE LOCKED");
+      return;
+    }
     if (e.key === "Enter") {
-      if (!currentRiddle) return;
-      const input = asciiInput.value.trim();
-      const correct = input === currentRiddle.answer;
-      document.getElementById("status").textContent = correct
-        ? "✔️ ACCESS GRANTED"
-        : "❌ ACCESS DENIED";
-
-      if (correct) {
+      const val = asciiInput.value.trim();
+      if (val === currentRiddle.answer) {
+        clearInterval(countdownInterval);
+        showBadge("✔️ ACCESS GRANTED");
         level++;
         setTimeout(nextRiddle, 800);
+      } else {
+        showBadge("❌ ACCESS DENIED");
       }
     }
   });
