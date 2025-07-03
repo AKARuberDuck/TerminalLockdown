@@ -2,108 +2,100 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Terminal Lockdown</title>
+  <title>TERMINAL LOCKDOWN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#00ff00" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icon-192.png" />
   <link rel="stylesheet" href="renderer/style.css" />
+  <link rel="icon" href="icon-192.png" />
 </head>
 <body>
   <div id="terminal">
-    <pre id="asciiBanner" class="ascii-banner">Initializing...</pre>
+    <pre id="asciiBanner" class="ascii-banner">BOOTING SYSTEM...</pre>
 
-    <div id="intro">
-      <h2>TERMINAL LOCKDOWN</h2>
-      <p>Enter agent codename:</p>
-      <input id="usernameInput" placeholder="e.g. NIGHTFOX" />
-      <div id="modifiers">
-        <label><input type="checkbox" id="lockBackspace" /> 🚫 BACKSPACE</label>
-        <label><input type="checkbox" id="hideFormat" /> ❓ FORMAT HIDDEN</label>
-        <label><input type="checkbox" id="timerLimit" /> ⏱️ TIMER</label>
-      </div>
-      <button id="startBtn">ENTER</button>
+    <!-- 🧑‍💻 Agent Login Panel -->
+    <div id="loginPanel">
+      <input id="loginUsername" placeholder="Agent Name" />
+      <input id="loginPassword" type="password" placeholder="Access Code" />
+      <button id="loginBtn">LOGIN</button>
+      <button id="createAccountBtn">REGISTER</button>
     </div>
 
-    <div id="game" style="display:none;">
-      <div id="levelLabel"></div>
-      <div id="envLabel"></div>
-      <p id="story"></p>
+    <!-- 🕹️ Main Game Interface -->
+    <div id="gamePanel" style="display:none;">
+      <div id="levelDisplay"></div>
       <p id="riddle"></p>
-      <p id="format"></p>
+      <p id="formatDisplay"></p>
       <div id="inputArea">
-        <input id="asciiInput" placeholder="ENTER ASCII CODE..." />
+        <input id="asciiInput" placeholder="ASCII CODE..." />
         <span class="cursor-blink"></span>
       </div>
-      <p id="timerDisplay"></p>
       <div id="status"></div>
+      <p id="timerDisplay"></p>
     </div>
 
-    <!-- Panels -->
-    <div id="asciiSearchPanel" style="display:none;"></div>
+    <!-- 📦 Agent Stats Viewer -->
+    <div id="agentStatsPanel" style="display:none;">
+      <select id="agentSelect"></select>
+      <pre id="agentStatsDisplay"></pre>
+    </div>
+
+    <!-- 🧪 Sandbox Tools -->
     <div id="sandboxPanel" style="display:none;">
-      <input id="sandboxInput" />
+      <input id="sandboxInput" placeholder="Decode / Encode..." />
       <select id="sandboxMode">
-        <option value="ENC_DEC">ENC_DEC</option>
-        <option value="ENC_HEX">ENC_HEX</option>
-        <option value="ENC_OCT">ENC_OCT</option>
-        <option value="DEC">DEC</option>
-        <option value="HEX">HEX</option>
-        <option value="OCT">OCT</option>
+        <option value="ENC_DEC">ENC DEC</option>
+        <option value="ENC_HEX">ENC HEX</option>
+        <option value="ENC_OCT">ENC OCT</option>
+        <option value="DEC">DEC → ASCII</option>
+        <option value="HEX">HEX → ASCII</option>
+        <option value="OCT">OCT → ASCII</option>
       </select>
       <pre id="sandboxOutput"></pre>
     </div>
 
-    <div id="codexPanel" style="display:none;">
-      <input id="codexSearch" placeholder="Search riddles" />
-      <select id="codexFilterTheme">
-        <option value="">All Themes</option>
-      </select>
-      <select id="codexFilterDifficulty">
-        <option value="">All Difficulties</option>
-      </select>
-      <select id="codexFilterOrigin">
-        <option value="">All Origins</option>
-      </select>
-      <pre id="codexContent"></pre>
-    </div>
-
-    <div id="metricsPanel" style="display:none;">
-      <pre id="metricsLog"></pre>
-    </div>
-
+    <!-- 📓 Agent Journal -->
     <div id="journalPanel" style="display:none;">
       <textarea id="journalTextarea" placeholder="Agent log..."></textarea>
       <label><input type="checkbox" id="encryptJournal" /> Encrypt Entry</label>
       <button id="saveJournalBtn">Save</button>
       <button id="decryptJournalBtn">Decrypt</button>
     </div>
+
+    <!-- 📚 Codex -->
+    <div id="codexPanel" style="display:none;">
+      <input id="codexSearch" placeholder="Search riddles..." />
+      <pre id="codexContent"></pre>
+    </div>
+
+    <!-- 📊 Performance Log -->
+    <div id="metricsPanel" style="display:none;">
+      <pre id="metricsLog"></pre>
+    </div>
+
+    <!-- ⚡ Emergency Indicator -->
+    <div id="badgeToast" class="toast hidden"></div>
+
+    <!-- 📎 Navigation Buttons -->
+    <button id="sandboxToggle">🧪 SANDBOX</button>
+    <button id="journalToggle">📓 JOURNAL</button>
+    <button id="codexToggle">📚 CODEX</button>
+    <button id="metricsToggle">📊 METRICS</button>
+    <button id="toggleStatsBtn">🧑‍💻 AGENTS</button>
+
+    <!-- 🪶 Footer -->
+    <footer>
+      TERMINAL LOCKDOWN v2.0 — MIT License — Created by AKARuberDuck
+    </footer>
   </div>
 
-  <!-- Navigation -->
-  <button id="asciiSearchToggle">🔍 ASCII</button>
-  <button id="sandboxToggle">🧪 TOOLS</button>
-  <button id="codexToggle">📚 CODEX</button>
-  <button id="metricsToggle">📊 METRICS</button>
-  <button id="journalToggle">📓 JOURNAL</button>
-
-  <div id="badgeToast" class="toast hidden"></div>
-
-  <footer id="footer">
-    TERMINAL LOCKDOWN v1.2.0 — Created by AKARuberDuck — MIT License
-  </footer>
-
-  <!-- Scripts: load in exact order -->
+  <!-- 🚀 Core Scripts -->
   <script src="renderer/utils.js" defer></script>
   <script src="renderer/riddles.js" defer></script>
-  <script src="renderer/generator.js" defer></script>
-  <script src="renderer/riddleAI.js" defer></script>
-  <script src="renderer/quantum.js" defer></script>
   <script src="renderer/app.js" defer></script>
   <script src="renderer/sandbox.js" defer></script>
+  <script src="renderer/journal.js" defer></script>
   <script src="renderer/codex.js" defer></script>
   <script src="renderer/metrics.js" defer></script>
-  <script src="renderer/journal.js" defer></script>
   <script src="renderer/badges.js" defer></script>
   <script src="renderer/uiEnhancements.js" defer></script>
   <script>
