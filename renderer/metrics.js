@@ -1,18 +1,18 @@
-const metricsLog = document.getElementById("metricsLog");
+document.addEventListener("DOMContentLoaded", () => {
+  const log = document.getElementById("metricsLog");
 
-function updateMetrics() {
-  const stats = getRiddleStats();
-  metricsLog.textContent = `
-RIDDLES SOLVED: ${stats.total}
- - Procedural: ${stats.procedural}
- - Neurolexicon: ${stats.neurolexicon}
-FORMATS:
- - DEC: ${stats.formats.dec}
- - HEX: ${stats.formats.hex}
- - OCT: ${stats.formats.oct}
+  function updateMetrics() {
+    const stats = getRiddleStats();
+    log.textContent = `
+SOLVED: ${stats.total}
+Procedural: ${stats.procedural}
+Neurolexicon: ${stats.neurolexicon}
+Formats:
+ - DEC: ${stats.formats["[DEC]"]}
+ - HEX: ${stats.formats["[HX]"]}
+ - OCT: ${stats.formats["[OCT]"]}
 `.trim();
-}
+  }
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "M" && e.altKey) updateMetrics();
+  updateMetrics();
 });
