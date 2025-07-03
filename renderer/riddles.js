@@ -843,7 +843,7 @@ const riddles = [
   answers: ["belief", "faith", "assumption"],
   format: "[OCT]",
   difficulty: "hard"
-}
+},
 {
   riddle: "You hide behind me to protect the truth.",
   answers: ["lie", "mask", "silence"],
