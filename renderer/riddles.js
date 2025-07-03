@@ -345,6 +345,7 @@ const riddles = [
 {
   riddle: "I begin where you end.",
   answers: ["death", "sleep"],
+},  
 {
   riddle: "The more you encrypt me, the louder I become.",
   answers: ["signal", "noise"],
