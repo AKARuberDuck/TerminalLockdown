@@ -1,12 +1,11 @@
-const badgeToast = document.getElementById("badgeToast");
-
 function showBadge(msg) {
-  if (!badgeToast) return;
-  badgeToast.textContent = msg;
-  badgeToast.classList.remove("hidden");
+  const toast = document.getElementById("badgeToast");
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.remove("hidden");
 
-  clearTimeout(badgeToast._timeout);
-  badgeToast._timeout = setTimeout(() => {
-    badgeToast.classList.add("hidden");
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => {
+    toast.classList.add("hidden");
   }, 3000);
 }
