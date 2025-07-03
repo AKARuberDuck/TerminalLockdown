@@ -627,7 +627,7 @@ const riddles = [
   answers: ["quantum", "maybe", "possibility"],
   format: "[HX]",
   difficulty: "hard"
-}
+},
 {
   riddle: "You search for me endlessly, yet I only arrive when you stop.",
   answers: ["peace", "stillness", "sleep"],
