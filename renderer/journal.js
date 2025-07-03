@@ -1,38 +1,33 @@
-const journalTextarea = document.getElementById("journalTextarea");
-const saveJournalBtn = document.getElementById("saveJournalBtn");
-const encryptJournal = document.getElementById("encryptJournal");
-const decryptToggle = document.getElementById("decryptJournalBtn");
+document.addEventListener("DOMContentLoaded", () => {
+  const journal = document.getElementById("journalTextarea");
+  const saveBtn = document.getElementById("saveJournalBtn");
+  const decryptBtn = document.getElementById("decryptJournalBtn");
+  const encryptToggle = document.getElementById("encryptJournal");
 
-// Load existing journal entry if present
-window.addEventListener("DOMContentLoaded", () => {
   const stored = localStorage.getItem("agentJournal");
-  if (stored) {
-    journalTextarea.value = stored;
-  }
-});
+  if (stored) journal.value = stored;
 
-saveJournalBtn.addEventListener("click", () => {
-  let content = journalTextarea.value.trim();
-  if (encryptJournal.checked) {
-    content = wordToAscii(content, "[DEC]");
-  }
-  localStorage.setItem("agentJournal", content);
-  showBadge("📓 Journal entry saved.");
-});
-
-// Optional: Decrypt toggle
-decryptToggle?.addEventListener("click", () => {
-  const content = journalTextarea.value.trim();
-  const codes = content.split(/\s+/);
-  if (codes.every(code => /^\d+$/.test(code))) {
-    try {
-      const text = codes.map(c => String.fromCharCode(parseInt(c, 10))).join("");
-      journalTextarea.value = text;
-      showBadge("🔓 Journal decrypted.");
-    } catch (e) {
-      showBadge("⚠️ Failed to decrypt.");
+  saveBtn.addEventListener("click", () => {
+    let entry = journal.value;
+    if (encryptToggle.checked) {
+      entry = wordToAscii(entry, "[DEC]");
     }
-  } else {
-    showBadge("ℹ️ Entry not encrypted.");
-  }
+    localStorage.setItem("agentJournal", entry);
+    showBadge("📓 Journal saved.");
+  });
+
+  decryptBtn.addEventListener("click", () => {
+    const content = journal.value.trim();
+    const codes = content.split(/\s+/);
+    if (codes.every(c => /^\d+$/.test(c))) {
+      try {
+        journal.value = codes.map(c => String.fromCharCode(parseInt(c))).join("");
+        showBadge("🔓 Decrypted.");
+      } catch {
+        showBadge("⚠️ Failed to decode.");
+      }
+    } else {
+      showBadge("ℹ️ Not encrypted.");
+    }
+  });
 });
