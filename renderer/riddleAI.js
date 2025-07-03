@@ -1,54 +1,30 @@
 const riddleMemory = {
-  lastNouns: [],
-  lastVerbs: [],
-  lastLines: []
+  lastNouns: [], lastVerbs: [], lastLines: []
 };
 
 function getTimePhase() {
   const hour = new Date().getHours();
-  if (hour >= 22 || hour < 4) return "night";
-  if (hour >= 16) return "evening";
-  if (hour >= 6 && hour < 12) return "morning";
-  return "day";
+  if (hour < 4 || hour >= 22) return "night";
+  if (hour < 12) return "morning";
+  if (hour < 18) return "day";
+  return "evening";
 }
 
 const styleByPhase = {
-  morning: [
-    "Decrypt the [noun] before it [verb]s your thoughts.",
-    "A [noun] awakens when logic [verb]s.",
-    "Format clarity is born at first [verb]."
-  ],
-  day: [
-    "What [noun] survives when [verb]ing fails?",
-    "The [noun] was left to [verb] in silence.",
-    "Echoes of [noun] continue to [verb] beyond control."
-  ],
-  evening: [
-    "Each [noun] fades once the [verb] begins.",
-    "Only the forgotten [noun] dares to [verb] twice.",
-    "[noun]. [verb]. [noun]. Again and again."
-  ],
-  night: [
-    "Dreams are just [noun]s trying to [verb] their way back.",
-    "Nothing [verb]s where the [noun] has vanished.",
-    "The [noun] drifts through recursive [verb]s."
-  ]
+  morning: ["The [noun] awakens as logic [verb]s."],
+  day: ["Only the [noun] dares to [verb] twice."],
+  evening: ["The [noun] fractures when you [verb]."],
+  night: ["Dreams are [noun]s trying to [verb] back."]
 };
-
-function echoFromMemory(tokens, fallback) {
-  return tokens.length && Math.random() > 0.3
-    ? tokens[Math.floor(Math.random() * tokens.length)]
-    : fallback[Math.floor(Math.random() * fallback.length)];
-}
 
 function injectNeuroRiddle() {
   const phase = getTimePhase();
   const template = getRandom(styleByPhase[phase]);
 
-  const noun1 = echoFromMemory(riddleMemory.lastNouns, nouns);
-  const noun2 = echoFromMemory(riddleMemory.lastNouns, nouns);
-  const verb1 = echoFromMemory(riddleMemory.lastVerbs, verbs);
-  const verb2 = echoFromMemory(riddleMemory.lastVerbs, verbs);
+  const noun1 = getRandom(nouns);
+  const noun2 = getRandom(nouns);
+  const verb1 = getRandom(verbs);
+  const verb2 = getRandom(verbs);
 
   const output = template
     .replace(/
@@ -72,12 +48,8 @@ function injectNeuroRiddle() {
 
 /, verb2);
 
-  riddleMemory.lastNouns.push(noun1, noun2);
-  riddleMemory.lastVerbs.push(verb1, verb2);
-  riddleMemory.lastLines.push(output);
-
-  const answer = echoFromMemory(riddleMemory.lastNouns, nouns);
   const format = getRandom(["[DEC]", "[HX]", "[OCT]"]);
+  const answer = noun1;
   const encoded = wordToAscii(answer, format);
 
   riddles.push({
@@ -85,10 +57,7 @@ function injectNeuroRiddle() {
     plain: answer,
     format,
     answer: encoded,
-    quantum: false,
-    difficulty: "quantum",
     origin: "neurolexicon",
-    theme: "memory",
-    log: `🧠 Generated during ${phase.toUpperCase()} phase from echo memory.`
+    theme: "memory"
   });
 }
