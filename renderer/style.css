@@ -180,3 +180,15 @@ footer {
     bottom: 0.5rem;
   }
 }
+@keyframes flashRed {
+  0% { background-color: #0b0f0c; }
+  50% { background-color: #330000; }
+  100% { background-color: #0b0f0c; }
+}
+.emergency-flash {
+  animation: flashRed 0.4s ease;
+}
+
+.toast {
+  transition: opacity 0.4s ease, transform 0.3s ease;
+}
