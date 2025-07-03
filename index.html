@@ -12,13 +12,15 @@
   <div id="terminal">
     <pre id="asciiBanner" class="ascii-banner">BOOTING SYSTEM...</pre>
 
-    <!-- 🧑‍💻 Agent Login Panel -->
-    <div id="loginPanel">
-      <input id="loginUsername" placeholder="Agent Name" />
-      <input id="loginPassword" type="password" placeholder="Access Code" />
-      <button id="loginBtn">LOGIN</button>
-      <button id="createAccountBtn">REGISTER</button>
-    </div>
+    <!-- 🧑‍💻 Agent Login Panel (Now in FORM) -->
+    <form id="loginForm" onsubmit="return false;" autocomplete="off">
+      <div id="loginPanel">
+        <input id="loginUsername" name="username" placeholder="Agent Name" autocomplete="username" />
+        <input id="loginPassword" name="password" type="password" placeholder="Access Code" autocomplete="current-password" />
+        <button type="button" id="loginBtn">LOGIN</button>
+        <button type="button" id="createAccountBtn">REGISTER</button>
+      </div>
+    </form>
 
     <!-- 🕹️ Main Game Interface -->
     <div id="gamePanel" style="display:none;">
@@ -33,7 +35,7 @@
       <p id="timerDisplay"></p>
     </div>
 
-    <!-- 📦 Agent Stats Viewer -->
+    <!-- 🧑‍💻 Other Agent Stats Viewer -->
     <div id="agentStatsPanel" style="display:none;">
       <select id="agentSelect"></select>
       <pre id="agentStatsDisplay"></pre>
@@ -67,7 +69,7 @@
       <pre id="codexContent"></pre>
     </div>
 
-    <!-- 📊 Performance Log -->
+    <!-- 📊 Performance Metrics -->
     <div id="metricsPanel" style="display:none;">
       <pre id="metricsLog"></pre>
     </div>
