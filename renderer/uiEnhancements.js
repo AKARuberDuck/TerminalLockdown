@@ -1,22 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const panels = [
-    "asciiSearchPanel", "sandboxPanel", "codexPanel",
-    "metricsPanel", "journalPanel"
-  ];
+toggleStatsBtn.onclick = () => {
+  agentStatsPanel.style.display = agentStatsPanel.style.display === "none" ? "block" : "none";
 
-  function togglePanel(id) {
-    panels.forEach(pid => {
-      const el = document.getElementById(pid);
-      if (el) el.style.display = pid === id ? "block" : "none";
-    });
-  }
+  agentSelect.innerHTML = "";
+  Object.keys(users).forEach(u => {
+    if (u !== currentUser) {
+      const opt = document.createElement("option");
+      opt.value = u;
+      opt.textContent = u;
+      agentSelect.appendChild(opt);
+    }
+  });
 
-  document.getElementById("asciiSearchToggle").onclick = () => togglePanel("asciiSearchPanel");
-  document.getElementById("sandboxToggle").onclick = () => togglePanel("sandboxPanel");
-  document.getElementById("codexToggle").onclick = () => togglePanel("codexPanel");
-  document.getElementById("metricsToggle").onclick = () => {
-    togglePanel("metricsPanel");
-    updateMetrics?.();
+  agentSelect.onchange = () => {
+    const agent = users[agentSelect.value];
+    const stats = agent.stats;
+    agentStatsDisplay.textContent = `
+NAME: ${agentSelect.value}
+SOLVED: ${stats.solved}
+FAILED: ${stats.failures}
+LEVEL: ${stats.level}
+`.trim();
   };
-  document.getElementById("journalToggle").onclick = () => togglePanel("journalPanel");
-});
+};
