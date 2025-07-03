@@ -1,33 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const journal = document.getElementById("journalTextarea");
-  const saveBtn = document.getElementById("saveJournalBtn");
-  const decryptBtn = document.getElementById("decryptJournalBtn");
-  const encryptToggle = document.getElementById("encryptJournal");
+journalToggle.onclick = () => {
+  journalPanel.style.display = journalPanel.style.display === "none" ? "block" : "none";
+  journalTextarea.value = users[currentUser].journal || "";
+};
 
-  const stored = localStorage.getItem("agentJournal");
-  if (stored) journal.value = stored;
+saveJournalBtn.onclick = () => {
+  let content = journalTextarea.value;
+  if (encryptJournal.checked) {
+    content = btoa(unescape(encodeURIComponent(content))); // Base64 encode
+  }
+  users[currentUser].journal = content;
+  localStorage.setItem("lockdownUsers", JSON.stringify(users));
+  showBadge("📝 Log saved");
+};
 
-  saveBtn.addEventListener("click", () => {
-    let entry = journal.value;
-    if (encryptToggle.checked) {
-      entry = wordToAscii(entry, "[DEC]");
-    }
-    localStorage.setItem("agentJournal", entry);
-    showBadge("📓 Journal saved.");
-  });
-
-  decryptBtn.addEventListener("click", () => {
-    const content = journal.value.trim();
-    const codes = content.split(/\s+/);
-    if (codes.every(c => /^\d+$/.test(c))) {
-      try {
-        journal.value = codes.map(c => String.fromCharCode(parseInt(c))).join("");
-        showBadge("🔓 Decrypted.");
-      } catch {
-        showBadge("⚠️ Failed to decode.");
-      }
-    } else {
-      showBadge("ℹ️ Not encrypted.");
-    }
-  });
-});
+decryptJournalBtn.onclick = () => {
+  try {
+    const raw = users[currentUser].journal;
+    const decoded = decodeURIComponent(escape(atob(raw)));
+    journalTextarea.value = decoded;
+  } catch {
+    showBadge("⚠️ Decryption failed");
+  }
+};
