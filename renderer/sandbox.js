@@ -1,30 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("sandboxInput");
-  const output = document.getElementById("sandboxOutput");
-  const mode = document.getElementById("sandboxMode");
+document.getElementById("sandboxToggle").onclick = () => {
+  sandboxPanel.style.display = sandboxPanel.style.display === "none" ? "block" : "none";
+};
 
-  input.addEventListener("input", () => {
-    const val = input.value.trim();
-    const type = mode.value;
-    if (!val) return output.textContent = "[ Awaiting input... ]";
+document.getElementById("sandboxInput").oninput = () => {
+  const raw = sandboxInput.value.trim();
+  const mode = sandboxMode.value;
+  let result = "";
 
-    try {
-      let result = "";
-      if (type.startsWith("ENC")) {
-        const format = type.includes("HEX") ? "[HX]"
-                      : type.includes("OCT") ? "[OCT]"
-                      : "[DEC]";
-        result = wordToAscii(val, format);
-      } else {
-        const base = type === "HEX" ? 16
-                   : type === "OCT" ? 8 : 10;
-        result = val.split(/\s+/)
-          .map(code => String.fromCharCode(parseInt(code, base)))
-          .join("");
+  if (mode === "ENC_DEC") result = wordToAscii(raw, "[DEC]");
+  else if (mode === "ENC_HEX") result = wordToAscii(raw, "[HX]");
+  else if (mode === "ENC_OCT") result = wordToAscii(raw, "[OCT]");
+  else if (["DEC", "HEX", "OCT"].includes(mode)) {
+    const ascii = raw.split(" ").map(code => {
+      try {
+        const num = parseInt(code, mode === "DEC" ? 10 : mode === "HEX" ? 16 : 8);
+        return String.fromCharCode(num);
+      } catch {
+        return "?";
       }
-      output.textContent = result;
-    } catch (e) {
-      output.textContent = `[ ERROR: ${e.message} ]`;
-    }
-  });
-});
+    }).join("");
+    result = ascii;
+  }
+
+  sandboxOutput.textContent = result;
+};
