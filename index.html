@@ -32,47 +32,80 @@
       <p id="riddle"></p>
       <p id="format"></p>
       <div id="inputArea">
-        <input id="asciiInput" placeholder="Enter cipher..." autofocus />
-        <div id="badgeToast" class="toast hidden"></div>
+        <input id="asciiInput" placeholder="ENTER ASCII CODE..." />
+        <span class="cursor-blink"></span>
       </div>
+      <p id="timerDisplay"></p>
       <div id="status"></div>
     </div>
 
-    <!-- Additional panels (journal, metrics, codex, sandbox) are loaded later -->
+    <!-- Panels -->
+    <div id="asciiSearchPanel" style="display:none;"></div>
+    <div id="sandboxPanel" style="display:none;">
+      <input id="sandboxInput" />
+      <select id="sandboxMode">
+        <option value="ENC_DEC">ENC_DEC</option>
+        <option value="ENC_HEX">ENC_HEX</option>
+        <option value="ENC_OCT">ENC_OCT</option>
+        <option value="DEC">DEC</option>
+        <option value="HEX">HEX</option>
+        <option value="OCT">OCT</option>
+      </select>
+      <pre id="sandboxOutput"></pre>
+    </div>
+
+    <div id="codexPanel" style="display:none;">
+      <input id="codexSearch" placeholder="Search riddles" />
+      <select id="codexFilterTheme">
+        <option value="">All Themes</option>
+      </select>
+      <select id="codexFilterDifficulty">
+        <option value="">All Difficulties</option>
+      </select>
+      <select id="codexFilterOrigin">
+        <option value="">All Origins</option>
+      </select>
+      <pre id="codexContent"></pre>
+    </div>
+
+    <div id="metricsPanel" style="display:none;">
+      <pre id="metricsLog"></pre>
+    </div>
+
+    <div id="journalPanel" style="display:none;">
+      <textarea id="journalTextarea" placeholder="Agent log..."></textarea>
+      <label><input type="checkbox" id="encryptJournal" /> Encrypt Entry</label>
+      <button id="saveJournalBtn">Save</button>
+      <button id="decryptJournalBtn">Decrypt</button>
+    </div>
   </div>
 
-  <!-- Navigation buttons and footer -->
+  <!-- Navigation -->
   <button id="asciiSearchToggle">🔍 ASCII</button>
   <button id="sandboxToggle">🧪 TOOLS</button>
   <button id="codexToggle">📚 CODEX</button>
   <button id="metricsToggle">📊 METRICS</button>
   <button id="journalToggle">📓 JOURNAL</button>
 
+  <div id="badgeToast" class="toast hidden"></div>
+
   <footer id="footer">
-    TERMINAL LOCKDOWN v1.2.0 — Created by Commander AKARuberDuck — MIT License
+    TERMINAL LOCKDOWN v1.2.0 — Created by AKARuberDuck — MIT License
   </footer>
 
-  <!-- Script loading order: from utilities to app engine -->
-  <script src="renderer/utils.js"></script>
-  <script src="renderer/modifiers.js"></script>
-  <script src="renderer/profiles.js"></script>
-  <script src="renderer/riddles.js"></script>
-  <script src="renderer/generator.js"></script>
-  <script src="renderer/riddleAI.js"></script>
-  <script src="renderer/quantum.js"></script>
-  <script src="renderer/fontRenderer.js"></script>
-  <script src="renderer/banner.js"></script>
-  <script src="renderer/badges.js"></script>
-  <script src="renderer/sandbox.js"></script>
-  <script src="renderer/metrics.js"></script>
-  <script src="renderer/codex.js"></script>
-  <script src="renderer/journal.js"></script>
-  <script src="renderer/glitch.js"></script>
-  <script src="renderer/mutator.js"></script>
-  <script src="renderer/uiEnhancements.js"></script>
-  <script src="renderer/app.js"></script>
-
-  <!-- Service Worker for offline support -->
+  <!-- Scripts: load in exact order -->
+  <script src="renderer/utils.js" defer></script>
+  <script src="renderer/riddles.js" defer></script>
+  <script src="renderer/generator.js" defer></script>
+  <script src="renderer/riddleAI.js" defer></script>
+  <script src="renderer/quantum.js" defer></script>
+  <script src="renderer/app.js" defer></script>
+  <script src="renderer/sandbox.js" defer></script>
+  <script src="renderer/codex.js" defer></script>
+  <script src="renderer/metrics.js" defer></script>
+  <script src="renderer/journal.js" defer></script>
+  <script src="renderer/badges.js" defer></script>
+  <script src="renderer/uiEnhancements.js" defer></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
