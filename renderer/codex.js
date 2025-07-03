@@ -1,30 +1,24 @@
-const codexSearch = document.getElementById("codexSearch");
-const codexTheme = document.getElementById("codexFilterTheme");
-const codexDifficulty = document.getElementById("codexFilterDifficulty");
-const codexOrigin = document.getElementById("codexFilterOrigin");
-const codexOutput = document.getElementById("codexContent");
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("codexSearch");
+  const theme = document.getElementById("codexFilterTheme");
+  const difficulty = document.getElementById("codexFilterDifficulty");
+  const origin = document.getElementById("codexFilterOrigin");
+  const display = document.getElementById("codexContent");
 
-codexSearch.addEventListener("input", filterCodex);
-codexTheme.addEventListener("change", filterCodex);
-codexDifficulty.addEventListener("change", filterCodex);
-codexOrigin.addEventListener("change", filterCodex);
+  function filter() {
+    const query = search.value.toLowerCase();
+    const matches = riddles.filter(r =>
+      (!query || r.riddle.toLowerCase().includes(query)) &&
+      (!theme.value || r.theme === theme.value) &&
+      (!difficulty.value || r.difficulty === difficulty.value) &&
+      (!origin.value || r.origin === origin.value)
+    );
+    display.textContent = matches.length
+      ? matches.map(r => `→ ${r.riddle} (${r.format})`).join("\n")
+      : "No matches.";
+  }
 
-function filterCodex() {
-  const query = codexSearch.value.toLowerCase();
-  const theme = codexTheme.value;
-  const level = codexDifficulty.value;
-  const origin = codexOrigin.value;
-
-  const matched = riddles.filter(r =>
-    (!query || r.riddle.toLowerCase().includes(query)) &&
-    (!theme || r.theme === theme) &&
-    (!level || r.difficulty === level) &&
-    (!origin || r.origin === origin)
+  [search, theme, difficulty, origin].forEach(el =>
+    el.addEventListener("input", filter)
   );
-
-  const display = matched.length
-    ? matched.map(r => `→ ${r.riddle} (${r.format})`).join("\n")
-    : "No matching riddles found.";
-
-  codexOutput.textContent = display;
-}
+});
