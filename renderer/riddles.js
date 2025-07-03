@@ -1,16 +1,14 @@
-// Global riddles log
 const riddles = [];
 
-// Optional analytics
 function getRiddleStats() {
   const stats = {
     total: riddles.length,
     procedural: riddles.filter(r => r.origin === "procedural").length,
     neurolexicon: riddles.filter(r => r.origin === "neurolexicon").length,
     formats: {
-      dec: riddles.filter(r => r.format === "[DEC]").length,
-      hex: riddles.filter(r => r.format === "[HX]").length,
-      oct: riddles.filter(r => r.format === "[OCT]").length
+      "[DEC]": riddles.filter(r => r.format === "[DEC]").length,
+      "[HX]": riddles.filter(r => r.format === "[HX]").length,
+      "[OCT]": riddles.filter(r => r.format === "[OCT]").length
     }
   };
   return stats;
