@@ -1,4 +1,4 @@
-const cacheName = "lockdown-cache-v1.0.0";
+const cacheName = "lockdown-cache-v2.5";
 const assets = [
   "./",
   "index.html",
