@@ -1,4 +1,4 @@
-const CACHE_NAME = 'terminal-lockdown-v2';
+const CACHE_NAME = 'terminal-lockdown-v2.5';
 const urlsToCache = [
   '/',
   '/index.html',
