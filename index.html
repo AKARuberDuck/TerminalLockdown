@@ -91,15 +91,16 @@
   </div>
 
   <!-- 🚀 Core Scripts -->
-<script src="renderer/utils.js" defer></script>
-<script src="renderer/riddles.js" defer></script>
-<script src="renderer/app.js" defer></script>
-<script src="renderer/sandbox.js" defer></script>
-<script src="renderer/journal.js" defer></script>
-<script src="renderer/codex.js" defer></script>
-<script src="renderer/metrics.js" defer></script>
-<script src="renderer/badges.js" defer></script>
-<script src="renderer/uiEnhancements.js" defer></script>
+<!-- 🚀 Core Scripts (Load in this exact order) -->
+<script src="renderer/utils.js"></script>
+<script src="renderer/riddles.js"></script>
+<script src="renderer/app.js"></script>
+<script src="renderer/sandbox.js"></script>
+<script src="renderer/journal.js"></script>
+<script src="renderer/codex.js"></script>
+<script src="renderer/metrics.js"></script>
+<script src="renderer/badges.js"></script>
+<script src="renderer/uiEnhancements.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
