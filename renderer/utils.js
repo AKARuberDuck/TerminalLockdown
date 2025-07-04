@@ -3,7 +3,7 @@ function getRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// 🔠 Convert word to ASCII based on format
+// 🔠 Convert word to ASCII string based on format
 function wordToAscii(word, format) {
   return word.split("").map(char => {
     const code = char.charCodeAt(0);
@@ -14,7 +14,7 @@ function wordToAscii(word, format) {
   }).join(" ");
 }
 
-// 🔐 Secure SHA-256 Password Hashing
+// 🔐 Secure SHA-256 hashing (local, client-side only)
 async function hashPassword(password) {
   const encoder = new TextEncoder();
   const data = encoder.encode(password);
@@ -30,20 +30,17 @@ function isCorrectAnswer(input, riddle) {
   return riddle.answers.some(ans => normalized === ans.toLowerCase());
 }
 
-// 📊 Get riddle format stats
+// 📊 Riddle format statistics
 function getRiddleStats() {
   const formats = ["[DEC]", "[HX]", "[OCT]"];
   const stats = {
-    total: riddles.length,
+    total: typeof riddles !== "undefined" ? riddles.length : 0,
     formats: {}
   };
   formats.forEach(fmt => {
-    stats.formats[fmt] = riddles.filter(r => r.format === fmt).length;
+    stats.formats[fmt] = typeof riddles !== "undefined"
+      ? riddles.filter(r => r.format === fmt).length
+      : 0;
   });
   return stats;
 }
-
-// 🧬 Pre-encode all riddle answers for faster matching
-riddles.forEach(r => {
-  r.encodedAnswers = r.answers.map(ans => wordToAscii(ans, r.format));
-});
