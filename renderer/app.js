@@ -1,3 +1,8 @@
+// 🧠 Pre-encode all riddle answers (safe now that riddles.js is loaded first)
+riddles.forEach(r => {
+  r.encodedAnswers = r.answers.map(ans => wordToAscii(ans, r.format));
+});
+
 let users = JSON.parse(localStorage.getItem("lockdownUsers") || "{}");
 let currentUser = null;
 let level = 0;
@@ -9,11 +14,15 @@ let lockBackspace = false;
 let timer;
 const asciiInput = document.getElementById("asciiInput");
 
-// 🧠 Login Logic
+// 🔐 Agent Login
 document.getElementById("loginBtn").onclick = () => {
   const name = loginUsername.value.trim();
   const pass = loginPassword.value.trim();
-  if (!name || !pass) return showBadge("⚠️ Enter credentials");
+  if (!name || !pass) {
+    highlightField(loginUsername);
+    highlightField(loginPassword);
+    return showBadge("⚠️ Enter credentials");
+  }
 
   hashPassword(pass).then(hashed => {
     if (users[name]?.password === hashed) {
@@ -26,11 +35,15 @@ document.getElementById("loginBtn").onclick = () => {
   });
 };
 
-// 🔐 Account Creation
+// 🧑‍💻 Create New Agent
 document.getElementById("createAccountBtn").onclick = () => {
   const name = loginUsername.value.trim();
   const pass = loginPassword.value.trim();
-  if (!name || !pass) return showBadge("⚠️ Enter details");
+  if (!name || !pass) {
+    highlightField(loginUsername);
+    highlightField(loginPassword);
+    return showBadge("⚠️ Enter details");
+  }
   if (users[name]) return showBadge("❌ Codename taken");
 
   hashPassword(pass).then(hashed => {
@@ -47,16 +60,16 @@ document.getElementById("createAccountBtn").onclick = () => {
   });
 };
 
-// 🚀 Game Start
+// 🚀 Launch Game
 function startGame() {
-  document.getElementById("loginPanel").style.display = "none";
-  document.getElementById("gamePanel").style.display = "block";
+  loginPanel.style.display = "none";
+  gamePanel.style.display = "block";
   level = users[currentUser].stats.level || 0;
   applyDifficultySettings(level);
   nextRiddle();
 }
 
-// ⚙️ Difficulty Scaling
+// 🎚️ Difficulty Logic
 function getDifficultyTier(level) {
   if (level < 6) return "Standard Ops";
   if (level < 11) return "Anomaly Zone";
@@ -77,37 +90,37 @@ function applyDifficultySettings(level) {
       formatVisible = false;
       scrambleRiddles = true;
       lockBackspace = false;
+      tierAlert(tier);
       break;
     case "Blackout Protocol":
       timerLimit = 15;
       formatVisible = false;
       scrambleRiddles = true;
       lockBackspace = true;
+      tierAlert(tier);
       break;
   }
-  document.getElementById("levelDisplay").textContent = `LEVEL ${level} — ${tier}`;
+  levelDisplay.textContent = `LEVEL ${level} — ${tier}`;
 }
 
-// 🔄 Riddle Engine
+// 🔄 Load New Riddle
 function nextRiddle() {
   currentRiddle = getRandom(riddles);
   if (scrambleRiddles) {
     currentRiddle.riddle = scrambleText(currentRiddle.riddle);
   }
 
-  const encoded = currentRiddle.encodedAnswers[0];
-  document.getElementById("riddle").textContent = currentRiddle.riddle;
-  document.getElementById("formatDisplay").textContent = formatVisible ? `FORMAT: ${currentRiddle.format}` : `FORMAT: [???]`;
+  riddle.textContent = currentRiddle.riddle;
+  formatDisplay.textContent = formatVisible ? `FORMAT: ${currentRiddle.format}` : `FORMAT: [???]`;
   asciiInput.value = "";
-  document.getElementById("status").textContent = "Decrypt now";
+  status.textContent = "Decrypt now";
 
-  // Timer start
   clearTimeout(timer);
-  document.getElementById("timerDisplay").textContent = `${timerLimit}s`;
+  timerDisplay.textContent = `${timerLimit}s`;
   let timeLeft = timerLimit;
   timer = setInterval(() => {
     timeLeft--;
-    document.getElementById("timerDisplay").textContent = `${timeLeft}s`;
+    timerDisplay.textContent = `${timeLeft}s`;
     if (timeLeft <= 0) {
       clearInterval(timer);
       failureHandler("⛔ TIMEOUT");
@@ -115,15 +128,16 @@ function nextRiddle() {
   }, 1000);
 }
 
-// 🧠 Scramble Riddle (Distortion)
+// 💥 Scramble Visual
 function scrambleText(text) {
   return text.split("").sort(() => 0.5 - Math.random()).join("");
 }
 
-// 🧪 Input Handler
+// 🧪 Player Input Handler
 asciiInput.addEventListener("keydown", e => {
   if (lockBackspace && e.key === "Backspace") {
     e.preventDefault();
+    showBadge("⛔ BACKSPACE LOCKED", 1500);
   }
   if (e.key === "Enter") {
     const input = asciiInput.value.trim().toLowerCase();
@@ -135,10 +149,10 @@ asciiInput.addEventListener("keydown", e => {
   }
 });
 
-// 🎯 Success
+// ✅ Success Handler
 function successHandler() {
   clearInterval(timer);
-  document.getElementById("status").textContent = "✅ ACCESS GRANTED";
+  status.textContent = "✅ ACCESS GRANTED";
   users[currentUser].stats.solved++;
   level++;
   users[currentUser].stats.level = level;
@@ -147,10 +161,18 @@ function successHandler() {
   setTimeout(nextRiddle, 1500);
 }
 
-// ❌ Failure
+// ❌ Failure Handler
 function failureHandler(reason = "❌ ACCESS DENIED") {
-  document.getElementById("status").textContent = reason;
+  status.textContent = reason;
+  if (getDifficultyTier(level) === "Blackout Protocol") {
+    triggerEmergencyFlash();
+  }
   users[currentUser].stats.failures++;
   localStorage.setItem("lockdownUsers", JSON.stringify(users));
   setTimeout(nextRiddle, 2000);
+}
+
+// 🧠 Optional: Load full profile logic
+function loadProfile(name) {
+  // Placeholder: can be extended to load rank, journal, etc.
 }
